@@ -9,5 +9,5 @@ public class PhotoDto {
 
     private Long id;
     private String url;
-    private boolean isMain;
+    private Boolean isMain;
 }

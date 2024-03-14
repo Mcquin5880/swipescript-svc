@@ -1,10 +1,12 @@
 package org.mcq.swipescriptsvc.service;
 
 import lombok.RequiredArgsConstructor;
+import org.mcq.swipescriptsvc.dto.MemberDto;
 import org.mcq.swipescriptsvc.entity.AppUser;
 import org.mcq.swipescriptsvc.error.LoginException;
 import org.mcq.swipescriptsvc.error.NotFoundException;
 import org.mcq.swipescriptsvc.error.RegistrationException;
+import org.mcq.swipescriptsvc.mapper.MemberMapper;
 import org.mcq.swipescriptsvc.model.LoginRequest;
 import org.mcq.swipescriptsvc.model.LoginResponse;
 import org.mcq.swipescriptsvc.model.RegistrationRequest;
@@ -13,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +23,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MemberMapper memberMapper;
 
     public AppUser registerUser(RegistrationRequest request) {
 
@@ -48,12 +52,16 @@ public class UserService {
         return new LoginResponse(request.getUsername(), "fake-12345");
     }
 
-    public AppUser getUserById(Long id) {
+    public MemberDto getUserById(Long id) {
         return userRepository.findById(id)
+                .map(memberMapper::toMemberDto)
                 .orElseThrow(() -> new NotFoundException("User not found with id: " + id));
     }
 
-    public List<AppUser> getAllUsers() {
-        return userRepository.findAll();
+    public List<MemberDto> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(memberMapper::toMemberDto)
+                .collect(Collectors.toList());
     }
 }

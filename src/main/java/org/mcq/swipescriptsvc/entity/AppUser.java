@@ -1,6 +1,5 @@
 package org.mcq.swipescriptsvc.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,7 +7,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Entity
@@ -37,8 +35,6 @@ public class AppUser {
     private LocalDate dateOfBirth;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "appUser", orphanRemoval = true)
-    // todo remove this annotation if possible after debugging
-    @JsonManagedReference
     private List<Photo> photos;
 
     @CreationTimestamp
@@ -46,9 +42,5 @@ public class AppUser {
 
     @UpdateTimestamp
     private Instant lastActive;
-
-    public int calculateAge() {
-        return (int) ChronoUnit.YEARS.between(dateOfBirth, LocalDate.now());
-    }
 
 }

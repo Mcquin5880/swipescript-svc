@@ -2,6 +2,7 @@ package org.mcq.swipescriptsvc.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.mcq.swipescriptsvc.dto.MemberDto;
 import org.mcq.swipescriptsvc.entity.AppUser;
 import org.mcq.swipescriptsvc.model.LoginRequest;
 import org.mcq.swipescriptsvc.model.LoginResponse;
@@ -30,12 +31,12 @@ public class UserController {
     }
 
     @GetMapping("users")
-    public List<AppUser> getUsers() {
+    public List<MemberDto> getUsers() {
         return userService.getAllUsers();
     }
 
     @GetMapping("users/{id}")
-    public ResponseEntity<AppUser> getUser(@PathVariable Long id) {
+    public ResponseEntity<MemberDto> getUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 }

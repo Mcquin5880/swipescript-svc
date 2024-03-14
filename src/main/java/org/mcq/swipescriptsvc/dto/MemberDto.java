@@ -23,6 +23,7 @@ public class MemberDto {
     private String interests;
     private String city;
     private String country;
+    private String photoUrl;
 
     private List<PhotoDto> photos;
 
