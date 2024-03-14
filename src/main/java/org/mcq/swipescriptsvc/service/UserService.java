@@ -43,7 +43,7 @@ public class UserService {
     public LoginResponse login(LoginRequest request) {
 
         AppUser user = userRepository.findByUsername(request.getUsername().toLowerCase())
-                .orElseThrow(() -> new LoginException("Invalid username / password!"));
+                .orElseThrow(() -> new LoginException("Invalid password / password!"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new LoginException("Invalid password / password!");

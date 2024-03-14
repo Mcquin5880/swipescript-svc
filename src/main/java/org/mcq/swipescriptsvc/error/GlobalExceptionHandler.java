@@ -1,7 +1,5 @@
 package org.mcq.swipescriptsvc.error;
 
-import org.apache.coyote.BadRequestException;
-import org.mcq.swipescriptsvc.error.temp.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -9,7 +7,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.security.auth.login.LoginException;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
@@ -27,7 +24,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler
+    @ExceptionHandler(RegistrationException.class)
     public ResponseEntity<ApiError> handleRegistrationExceptions(RegistrationException ex) {
 
         ApiError apiError = ApiError.builder()
@@ -40,7 +37,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(LoginException.class)
     public ResponseEntity<ApiError> handleLoginExceptions(LoginException ex) {
-
         ApiError apiError = ApiError.builder()
                 .status(HttpStatus.UNAUTHORIZED.value())
                 .message(ex.getMessage())
@@ -79,24 +75,25 @@ public class GlobalExceptionHandler {
 
 
     // todo added for testing - might remove
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ApiError> handleBadRequestExceptions(BadRequestException ex) {
-        ApiError apiError = ApiError.builder()
-                .status(HttpStatus.BAD_REQUEST.value())
-                .message(ex.getMessage())
-                .build();
-
-        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
-    }
-
-    // todo added for testing - might remove
-    @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ApiError> handleUnauthorizedExceptions(UnauthorizedException ex) {
-        ApiError apiError = ApiError.builder()
-                .status(HttpStatus.UNAUTHORIZED.value())
-                .message(ex.getMessage())
-                .build();
-
-        return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
-    }
+//    @ExceptionHandler(BadRequestException.class)
+//    public ResponseEntity<ApiError> handleBadRequestExceptions(BadRequestException ex) {
+//        ApiError apiError = ApiError.builder()
+//                .status(HttpStatus.BAD_REQUEST.value())
+//                .message(ex.getMessage())
+//                .build();
+//
+//        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+//    }
+//
+//    // todo added for testing - might remove
+//    @ExceptionHandler(UnauthorizedException.class)
+//    public ResponseEntity<ApiError> handleUnauthorizedExceptions(UnauthorizedException ex) {
+//        ApiError apiError = ApiError.builder()
+//                .status(HttpStatus.UNAUTHORIZED.value())
+//                .message(ex.getMessage())
+//                .build();
+//
+//        System.out.println("HEY IT WORKED");
+//        return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
+//    }
 }

@@ -14,8 +14,9 @@ import java.util.List;
 @Mapper
 public interface MemberMapper {
 
+    // todo enable after updating dto's
     @Mappings({
-            @Mapping(target = "age", expression = "java(calculateAge(appUser.getDateOfBirth()))"),
+            //@Mapping(target = "age", expression = "java(calculateAge(appUser.getDateOfBirth()))"),
             @Mapping(target = "photoUrl", expression = "java(getMainPhotoUrl(appUser.getPhotos()))")
     })
     MemberDto toMemberDto(AppUser appUser);
